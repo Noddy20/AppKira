@@ -60,7 +60,6 @@ dependencies {
 }
 
 kotlinter {
-    //ktlintVersion = "1.5.0"
     ignoreFormatFailures = true
     ignoreLintFailures = false
     reporters = arrayOf("checkstyle")
