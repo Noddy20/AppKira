@@ -59,52 +59,47 @@ fun AppBottomBar(
     selectedTab: BottomTab,
     onTabSelected: (BottomTab) -> Unit,
 ) {
-    Box(
+    NavigationBar(
         modifier =
             Modifier
-                .fillMaxWidth()
-                .height(AppDimen.DimenHeightBottomNav),
+                .fillMaxWidth(),
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = AppDimen.DimenX,
     ) {
-        NavigationBar(
-            modifier = Modifier,
-            containerColor = MaterialTheme.colorScheme.surface,
-            tonalElevation = AppDimen.DimenX,
-        ) {
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        modifier = Modifier.size(AppDimen.Dimen6X, AppDimen.Dimen6X),
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_android),
-                        contentDescription = "Apps",
-                    )
-                },
-                selected = selectedTab == BottomTab.Home,
-                onClick = { onTabSelected(BottomTab.Home) },
-                colors =
-                    NavigationBarItemDefaults.colors(
-                        selectedIconColor = AppColors.Green,
-                        selectedTextColor = AppColors.Green,
-                    ),
-            )
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        modifier =
-                            Modifier
-                                .size(AppDimen.Dimen6X, AppDimen.Dimen6X),
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_utilities),
-                        contentDescription = "About",
-                    )
-                },
-                selected = selectedTab == BottomTab.Dashboard,
-                onClick = { onTabSelected(BottomTab.Dashboard) },
-                colors =
-                    NavigationBarItemDefaults.colors(
-                        selectedIconColor = AppColors.Green,
-                        selectedTextColor = AppColors.Green,
-                    ),
-            )
-        }
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    modifier = Modifier.size(AppDimen.Dimen6X, AppDimen.Dimen6X),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_android),
+                    contentDescription = "Apps",
+                )
+            },
+            selected = selectedTab == BottomTab.Home,
+            onClick = { onTabSelected(BottomTab.Home) },
+            colors =
+                NavigationBarItemDefaults.colors(
+                    selectedIconColor = AppColors.Green,
+                    selectedTextColor = AppColors.Green,
+                ),
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    modifier =
+                        Modifier
+                            .size(AppDimen.Dimen6X, AppDimen.Dimen6X),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_utilities),
+                    contentDescription = "About",
+                )
+            },
+            selected = selectedTab == BottomTab.Dashboard,
+            onClick = { onTabSelected(BottomTab.Dashboard) },
+            colors =
+                NavigationBarItemDefaults.colors(
+                    selectedIconColor = AppColors.Green,
+                    selectedTextColor = AppColors.Green,
+                ),
+        )
     }
 }
 

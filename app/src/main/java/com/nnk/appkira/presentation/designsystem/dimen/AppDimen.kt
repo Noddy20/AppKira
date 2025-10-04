@@ -15,5 +15,5 @@ object AppDimen {
     val Dimen7X = 28.dp
     val Dimen8X = 32.dp
 
-    val DimenHeightBottomNav = 56.dp
+    val DimenHeightBottomNav = 64.dp
 }
