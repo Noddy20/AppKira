@@ -1,4 +1,4 @@
-package com.nnk.appkira.presentation.screens.home.viewmodel
+package com.nnk.appkira.presentation.features.home.screens.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

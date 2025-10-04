@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppKira">
         <activity
-            android:name=".presentation.screens.HomeActivity"
+            android:name=".presentation.features.home.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.AppKira">
             <intent-filter>

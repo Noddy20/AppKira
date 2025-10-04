@@ -1,9 +1,8 @@
-package com.nnk.appkira.presentation.screens.home
+package com.nnk.appkira.presentation.features.home.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -12,7 +11,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +24,8 @@ import com.nnk.appkira.R
 import com.nnk.appkira.presentation.designsystem.color.AppColors
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
-import com.nnk.appkira.presentation.screens.dashboard.DashboardScreen
+import com.nnk.appkira.presentation.features.home.screens.dashboard.DashboardScreen
+import com.nnk.appkira.presentation.features.home.screens.home.HomeScreen
 
 @Composable
 fun HomeContainerScreen() {

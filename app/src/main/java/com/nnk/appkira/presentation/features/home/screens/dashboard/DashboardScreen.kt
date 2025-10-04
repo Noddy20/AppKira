@@ -1,4 +1,4 @@
-package com.nnk.appkira.presentation.screens.dashboard
+package com.nnk.appkira.presentation.features.home.screens.dashboard
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

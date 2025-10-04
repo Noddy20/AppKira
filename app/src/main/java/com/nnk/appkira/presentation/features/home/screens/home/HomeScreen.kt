@@ -1,4 +1,4 @@
-package com.nnk.appkira.presentation.screens.home
+package com.nnk.appkira.presentation.features.home.screens.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nnk.appkira.presentation.screens.home.viewmodel.HomeScreenViewModel
+import com.nnk.appkira.presentation.features.home.screens.home.viewmodel.HomeScreenViewModel
 
 @Composable
 fun HomeScreen() {
