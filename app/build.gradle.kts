@@ -56,6 +56,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
+    implementation(libs.datastore.core)
+    implementation(libs.datastore.preferences)
 
     testImplementation(libs.junit)
 
