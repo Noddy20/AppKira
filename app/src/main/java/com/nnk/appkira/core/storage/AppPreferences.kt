@@ -14,6 +14,10 @@ interface AppPreferences {
 
     suspend fun setShowSpecialAppsPref(specialApps: Set<String>)
 
+    suspend fun getAppsForceStopModesPref(): Map<String, String>
+
+    suspend fun setAppsForceStopModesPref(modes: Map<String, String>)
+
     companion object {
         fun getInstance(preferences: DataStore<Preferences>): AppPreferences = AppPreferencesImpl(preferences)
     }
@@ -34,7 +38,26 @@ private class AppPreferencesImpl(
         }
     }
 
+    override suspend fun getAppsForceStopModesPref(): Map<String, String> =
+        preferences.data
+            .map { prefs ->
+                prefs[KEY_SHOW_SPECIAL_APPS_PREF] ?: emptySet()
+            }.first()
+            .associate {
+                val (key, value) = it.split("|")
+                key to value
+            }
+
+    override suspend fun setAppsForceStopModesPref(modes: Map<String, String>) {
+        preferences.edit { prefs ->
+            val set = mutableSetOf<String>()
+            modes.forEach { set.add("${it.key}|${it.value}") }
+            prefs[KEY_APPS_FORCE_STOP_MODES_PREF] = set
+        }
+    }
+
     companion object {
         private val KEY_SHOW_SPECIAL_APPS_PREF = stringSetPreferencesKey("show_special_apps_pref")
+        private val KEY_APPS_FORCE_STOP_MODES_PREF = stringSetPreferencesKey("apps_force_stop_modes_pref")
     }
 }
