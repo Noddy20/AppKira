@@ -12,6 +12,19 @@ import com.nnk.appkira.core.storage.AppPreferences
 
 interface AppInformationProvider {
     suspend fun getInstalledApps(): Result<List<PackageInfo>>
+
+    suspend fun getForceStopModes(): Result<Map<String, String>>
+
+    companion object {
+        fun getInstance(
+            context: Context,
+            appPreferences: AppPreferences,
+        ): AppInformationProvider =
+            AppInformationProviderImpl(
+                context = context,
+                appPreferences = appPreferences,
+            )
+    }
 }
 
 private class AppInformationProviderImpl(
@@ -44,6 +57,14 @@ private class AppInformationProviderImpl(
             Logger.e("Error getting apps", e)
             Result.failure(e)
         }
+
+    override suspend fun getForceStopModes(): Result<Map<String, String>> {
+        try {
+        } catch (e: Exception) {
+            Logger.e("Error getting force stop modes", e)
+            return Result.failure(e)
+        }
+    }
 
     private fun getLauncherAppPackageName(): String? {
         val packageManager = context.applicationContext.packageManager
