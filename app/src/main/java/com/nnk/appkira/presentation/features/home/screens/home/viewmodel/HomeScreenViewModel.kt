@@ -6,20 +6,35 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.nnk.appkira.core.logger.Logger
+import com.nnk.appkira.data.features.home.AppInformationProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel
     @Inject
-    constructor() : ViewModel() {
+    constructor(
+        private val appInformationProvider: AppInformationProvider,
+    ) : ViewModel() {
         val list =
             flow {
                 delay(4000)
                 emit(listOf("A", "B", "C"))
             }
+
+        init {
+            viewModelScope.launch(Dispatchers.IO) {
+                appInformationProvider.getRecentAggregatedUsageStats().forEach {
+                    Logger.d("AppUsageStats App: ${it.key} , UsageStats: ${it.value}")
+                }
+            }
+        }
 
         fun getInstalledApps(context: Context): List<AppInfo> {
             val packageManager = context.packageManager

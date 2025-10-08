@@ -1,3 +1,5 @@
 package com.nnk.appkira.domain.model
 
-data class AppInformationModel
+data class AppInformationModel(
+    val id: String,
+)

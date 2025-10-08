@@ -1,6 +1,8 @@
 package com.nnk.appkira.data.features.home
 
 import android.annotation.SuppressLint
+import android.app.usage.UsageStats
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -9,11 +11,16 @@ import android.content.pm.PackageManager
 import com.nnk.appkira.BuildConfig
 import com.nnk.appkira.core.logger.Logger
 import com.nnk.appkira.core.storage.AppPreferences
+import java.util.concurrent.TimeUnit
 
 interface AppInformationProvider {
     suspend fun getInstalledApps(): Result<List<PackageInfo>>
 
-    suspend fun getForceStopModes(): Result<Map<String, String>>
+    suspend fun getAppForceStopMode(packageName: String): Result<String>
+
+    suspend fun isAppRunning(applicationInfo: ApplicationInfo): Boolean
+
+    suspend fun getRecentAggregatedUsageStats(): Map<String, UsageStats>
 
     companion object {
         fun getInstance(
@@ -58,13 +65,32 @@ private class AppInformationProviderImpl(
             Result.failure(e)
         }
 
-    override suspend fun getForceStopModes(): Result<Map<String, String>> {
-        try {
+    override suspend fun getAppForceStopMode(packageName: String): Result<String> {
+        return try {
+            Result.success(appPreferences.getAppForceStopModePref(packageName))
         } catch (e: Exception) {
-            Logger.e("Error getting force stop modes", e)
+            Logger.e("Error getting force stop mode for $packageName", e)
             return Result.failure(e)
         }
     }
+
+    override suspend fun isAppRunning(applicationInfo: ApplicationInfo): Boolean =
+        !applicationInfo.flags.isFlagSet(ApplicationInfo.FLAG_STOPPED)
+
+    override suspend fun getRecentAggregatedUsageStats(): Map<String, UsageStats> =
+        try {
+            val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+
+            val delay = appPreferences.getAutoForceStopDelayInMillis()
+            val now = System.currentTimeMillis()
+            val startDate = now - delay
+            Logger.d("getRecentAggregatedUsageStats $now | $startDate ${TimeUnit.MILLISECONDS.toDays(now - startDate)}")
+
+            usageStatsManager.queryAndAggregateUsageStats(startDate, now).orEmpty()
+        } catch (e: Exception) {
+            Logger.e("Error getting recent aggregated usage stats", e)
+            emptyMap()
+        }
 
     private fun getLauncherAppPackageName(): String? {
         val packageManager = context.applicationContext.packageManager
