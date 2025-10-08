@@ -1,37 +1,124 @@
 package com.nnk.appkira.presentation.features.home.screens.home
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nnk.appkira.domain.model.AppInformationModel
+import com.nnk.appkira.presentation.designsystem.color.AppColors
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.features.home.screens.home.viewmodel.HomeScreenViewModel
 
 @Composable
 fun HomeScreen() {
     val viewModel = hiltViewModel<HomeScreenViewModel>()
-    val list = viewModel.list.collectAsStateWithLifecycle(emptyList())
-    val context = LocalContext.current
-    val items = viewModel.getInstalledApps(context)
+
+    val items = viewModel.list.collectAsStateWithLifecycle(initialValue = emptyList())
+
     Column {
-        Text("Total Apps: ${items.size}")
+        Text("Total Apps: ${items.value.size}")
         Spacer(modifier = Modifier.height(AppDimen.Dimen2).fillMaxWidth())
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
         ) {
-            items(items = items) { item ->
-                Text(text = "Item : $item")
+            items(items = items.value) { item ->
+                AppInfoItem(item)
             }
         }
+    }
+}
+
+@Composable
+private fun AppInfoItem(appInfo: AppInformationModel) {
+    // Determine the color and text for the running status pill
+    val statusColor = if (appInfo.isRunning) AppColors.Red else AppColors.Green
+    val statusText = if (appInfo.isRunning) "Running" else "Idle"
+
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = AppDimen.Dimen2X, horizontal = AppDimen.Dimen4X),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        // 1. App Launcher Icon
+        val bitmap =
+            remember(appInfo.icon) {
+                // Convert Android Drawable to Compose ImageBitmap
+                appInfo.icon!!.toBitmap(width = 96, height = 96).asImageBitmap()
+            }
+
+        Image(
+            bitmap = bitmap,
+            contentDescription = "App Icon: ${appInfo.name}",
+            modifier =
+                Modifier
+                    .size(AppDimen.DimenAppInfoIconSize)
+                    .clip(RoundedCornerShape(AppDimen.Dimen3X))
+                    .background(AppColors.White),
+        )
+
+        Spacer(modifier = Modifier.width(AppDimen.Dimen4X))
+
+        Column(
+            modifier = Modifier.weight(1f),
+        ) {
+            // 2. App Name
+            Text(
+                text = appInfo.name,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+            )
+            // App Package Name (Subtitle)
+            Text(
+                text = appInfo.packageName,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+            )
+        }
+
+        Spacer(modifier = Modifier.width(AppDimen.Dimen4X))
+
+        // 3. Running Status Pill
+        AssistChip(
+            onClick = { /* Do nothing or open app settings */ },
+            label = {
+                Text(
+                    text = statusText,
+                    color = AppColors.White,
+                    style = MaterialTheme.typography.labelSmall,
+                )
+            },
+            modifier = Modifier.height(AppDimen.Dimen8X),
+            colors =
+                AssistChipDefaults.assistChipColors(
+                    containerColor = statusColor,
+                ),
+        )
     }
 }

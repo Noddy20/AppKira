@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import com.nnk.appkira.BuildConfig
 import com.nnk.appkira.core.logger.Logger
 import com.nnk.appkira.core.storage.AppPreferences
@@ -15,6 +16,12 @@ import java.util.concurrent.TimeUnit
 
 interface AppInformationProvider {
     suspend fun getInstalledApps(): Result<List<PackageInfo>>
+
+    suspend fun getAppInfo(packageName: String): ApplicationInfo?
+
+    suspend fun getAppLabel(applicationInfo: ApplicationInfo): String?
+
+    suspend fun getAppIcon(applicationInfo: ApplicationInfo): Drawable?
 
     suspend fun getAppForceStopMode(packageName: String): Result<String>
 
@@ -55,15 +62,29 @@ private class AppInformationProviderImpl(
                 return true
             }
 
-            val result =
+            val apps =
                 context.packageManager
                     .getInstalledPackages(PackageManager.GET_META_DATA)
-                    .filter(::shouldShowSpecialApps)
+            val result = apps.filter(::shouldShowSpecialApps)
+            Logger.d("getInstalledApps: fetched ${apps.size} apps | filtered ${result.size} apps")
             Result.success(result)
         } catch (e: Exception) {
             Logger.e("Error getting apps", e)
             Result.failure(e)
         }
+
+    override suspend fun getAppInfo(packageName: String): ApplicationInfo? =
+        try {
+            context.packageManager.getApplicationInfo(packageName, 0)
+        } catch (e: Exception) {
+            Logger.e("Error getting app info for $packageName", e)
+            null
+        }
+
+    override suspend fun getAppLabel(applicationInfo: ApplicationInfo): String? =
+        applicationInfo.loadLabel(context.packageManager).toString()
+
+    override suspend fun getAppIcon(applicationInfo: ApplicationInfo): Drawable? = applicationInfo.loadIcon(context.packageManager)
 
     override suspend fun getAppForceStopMode(packageName: String): Result<String> {
         return try {
