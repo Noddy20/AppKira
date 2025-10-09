@@ -29,23 +29,29 @@ interface AppInformationProvider {
 
     suspend fun getRecentAggregatedUsageStats(): Map<String, UsageStats>
 
+    suspend fun isAppUsedRecently(usageStats: UsageStats): Boolean
+
+    suspend fun isAppInActive(packageName: String): Boolean
+
     companion object {
         fun getInstance(
-            context: Context,
             appPreferences: AppPreferences,
+            usageStatsManager: UsageStatsManager,
+            packageManager: PackageManager,
         ): AppInformationProvider =
             AppInformationProviderImpl(
-                context = context,
                 appPreferences = appPreferences,
+                usageStatsManager = usageStatsManager,
+                packageManager = packageManager,
             )
     }
 }
 
 private class AppInformationProviderImpl(
-    private val context: Context,
     private val appPreferences: AppPreferences,
+    private val usageStatsManager: UsageStatsManager,
+    private val packageManager: PackageManager,
 ) : AppInformationProvider {
-    @SuppressLint("QueryPermissionsNeeded")
     override suspend fun getInstalledApps(): Result<List<PackageInfo>> =
         try {
             val specialAppsToShow = appPreferences.getShowSpecialAppsPref()
@@ -62,11 +68,8 @@ private class AppInformationProviderImpl(
                 return true
             }
 
-            val apps =
-                context.packageManager
-                    .getInstalledPackages(PackageManager.GET_META_DATA)
+            val apps = packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
             val result = apps.filter(::shouldShowSpecialApps)
-            Logger.d("getInstalledApps: fetched ${apps.size} apps | filtered ${result.size} apps")
             Result.success(result)
         } catch (e: Exception) {
             Logger.e("Error getting apps", e)
@@ -75,16 +78,15 @@ private class AppInformationProviderImpl(
 
     override suspend fun getAppInfo(packageName: String): ApplicationInfo? =
         try {
-            context.packageManager.getApplicationInfo(packageName, 0)
+            packageManager.getApplicationInfo(packageName, 0)
         } catch (e: Exception) {
             Logger.e("Error getting app info for $packageName", e)
             null
         }
 
-    override suspend fun getAppLabel(applicationInfo: ApplicationInfo): String? =
-        applicationInfo.loadLabel(context.packageManager).toString()
+    override suspend fun getAppLabel(applicationInfo: ApplicationInfo): String? = applicationInfo.loadLabel(packageManager).toString()
 
-    override suspend fun getAppIcon(applicationInfo: ApplicationInfo): Drawable? = applicationInfo.loadIcon(context.packageManager)
+    override suspend fun getAppIcon(applicationInfo: ApplicationInfo): Drawable? = applicationInfo.loadIcon(packageManager)
 
     override suspend fun getAppForceStopMode(packageName: String): Result<String> {
         return try {
@@ -100,8 +102,6 @@ private class AppInformationProviderImpl(
 
     override suspend fun getRecentAggregatedUsageStats(): Map<String, UsageStats> =
         try {
-            val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-
             val delay = appPreferences.getAutoForceStopDelayInMillis()
             val now = System.currentTimeMillis()
             val startDate = now - delay
@@ -113,8 +113,24 @@ private class AppInformationProviderImpl(
             emptyMap()
         }
 
+    override suspend fun isAppUsedRecently(usageStats: UsageStats): Boolean {
+        val delay = appPreferences.getAutoForceStopDelayInMillis()
+        val lastTimeUsed = usageStats.lastTimeUsed
+        val now = System.currentTimeMillis()
+        val isUsedRecently = (now - lastTimeUsed) <= delay
+        return isUsedRecently
+    }
+
+    override suspend fun isAppInActive(packageName: String): Boolean =
+        try {
+            usageStatsManager.isAppInactive(packageName)
+        } catch (e: Exception) {
+            Logger.e("Error checking if app is inactive for $packageName", e)
+            false
+        }
+
     private fun getLauncherAppPackageName(): String? {
-        val packageManager = context.applicationContext.packageManager
+        val packageManager = packageManager
 
         val intent = Intent("android.intent.action.MAIN")
         intent.addCategory("android.intent.category.HOME")

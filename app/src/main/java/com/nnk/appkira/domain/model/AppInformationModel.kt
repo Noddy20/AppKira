@@ -7,4 +7,6 @@ data class AppInformationModel(
     val name: String,
     val icon: Drawable?,
     val isRunning: Boolean,
+    val isUsedRecently: Boolean,
+    val isInActive: Boolean,
 )

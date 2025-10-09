@@ -1,5 +1,6 @@
 package com.nnk.appkira.data.features.di
 
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import com.nnk.appkira.core.storage.AppPreferences
 import com.nnk.appkira.data.features.home.AppInformationProvider
@@ -20,7 +21,8 @@ object HomeDataModule {
         appPreferences: AppPreferences,
     ): AppInformationProvider =
         AppInformationProvider.getInstance(
-            context = context,
             appPreferences = appPreferences,
+            usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager,
+            packageManager = context.packageManager,
         )
 }
