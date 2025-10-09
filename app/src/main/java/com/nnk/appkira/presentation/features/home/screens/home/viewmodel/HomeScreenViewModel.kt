@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nnk.appkira.core.logger.Logger
 import com.nnk.appkira.data.features.home.AppInformationProvider
-import com.nnk.appkira.domain.usecase.GetInstalledAppsUseCase
+import com.nnk.appkira.domain.usecase.GetDeviceAppsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,11 +16,11 @@ class HomeScreenViewModel
     @Inject
     constructor(
         private val appInformationProvider: AppInformationProvider,
-        private val getInstalledAppsUseCase: GetInstalledAppsUseCase,
+        private val getDeviceAppsUseCase: GetDeviceAppsUseCase,
     ) : ViewModel() {
         val list =
             flow {
-                val apps = getInstalledAppsUseCase.invoke().getOrNull().orEmpty()
+                val apps = getDeviceAppsUseCase.invoke().getOrNull().orEmpty()
                 Logger.d("Apps loaded : ${apps.size}")
                 emit(apps)
             }
