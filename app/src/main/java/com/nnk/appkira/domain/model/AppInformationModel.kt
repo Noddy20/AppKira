@@ -9,4 +9,5 @@ data class AppInformationModel(
     val isRunning: Boolean,
     val isUsedRecently: Boolean,
     val isInActive: Boolean,
+    val stopMode: AppForceStopMode,
 )
