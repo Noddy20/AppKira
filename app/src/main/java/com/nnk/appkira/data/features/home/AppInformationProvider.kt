@@ -1,9 +1,7 @@
 package com.nnk.appkira.data.features.home
 
-import android.annotation.SuppressLint
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
@@ -12,6 +10,7 @@ import android.graphics.drawable.Drawable
 import com.nnk.appkira.BuildConfig
 import com.nnk.appkira.core.logger.Logger
 import com.nnk.appkira.core.storage.AppPreferences
+import com.nnk.appkira.domain.model.AppForceStopMode
 import java.util.concurrent.TimeUnit
 
 interface AppInformationProvider {
@@ -23,7 +22,7 @@ interface AppInformationProvider {
 
     suspend fun getAppIcon(applicationInfo: ApplicationInfo): Drawable?
 
-    suspend fun getAppForceStopMode(packageName: String): Result<String>
+    suspend fun getAppForceStopMode(packageName: String): String
 
     suspend fun isAppRunning(applicationInfo: ApplicationInfo): Boolean
 
@@ -88,12 +87,12 @@ private class AppInformationProviderImpl(
 
     override suspend fun getAppIcon(applicationInfo: ApplicationInfo): Drawable? = applicationInfo.loadIcon(packageManager)
 
-    override suspend fun getAppForceStopMode(packageName: String): Result<String> {
+    override suspend fun getAppForceStopMode(packageName: String): String {
         return try {
-            Result.success(appPreferences.getAppForceStopModePref(packageName))
+            appPreferences.getAppForceStopModePref(packageName)
         } catch (e: Exception) {
             Logger.e("Error getting force stop mode for $packageName", e)
-            return Result.failure(e)
+            return AppForceStopMode.Never.modeName
         }
     }
 

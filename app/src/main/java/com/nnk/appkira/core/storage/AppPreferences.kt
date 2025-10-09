@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import com.nnk.appkira.core.ext.empty
+import com.nnk.appkira.domain.model.AppForceStopMode
 import com.nnk.appkira.domain.model.AutoForceStopDelay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -50,7 +50,7 @@ private class AppPreferencesImpl(
     override suspend fun getAppForceStopModePref(packageName: String): String =
         preferences.data
             .map { prefs ->
-                prefs[keyAppForceStopModePref(packageName)] ?: String.empty()
+                prefs[keyAppForceStopModePref(packageName)] ?: AppForceStopMode.Never.modeName
             }.first()
 
     override suspend fun setAppForceStopModePref(

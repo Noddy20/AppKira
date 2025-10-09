@@ -2,6 +2,7 @@ package com.nnk.appkira.domain.usecase
 
 import com.nnk.appkira.core.logger.Logger
 import com.nnk.appkira.data.features.home.AppInformationProvider
+import com.nnk.appkira.domain.model.AppForceStopMode
 import com.nnk.appkira.domain.model.AppInformationModel
 
 interface GetDeviceAppsUseCase {
@@ -32,6 +33,7 @@ private class GetDeviceAppsUseCaseImpl(
                     val isAppRunning = appInfo?.let { appInformationProvider.isAppRunning(it) } ?: false
                     val isAppUsedRecently = usageStat?.let { appInformationProvider.isAppUsedRecently(it) } ?: false
                     val isAppInActive = appInformationProvider.isAppInActive(packageInfo.packageName)
+                    val appStopMode = appInformationProvider.getAppForceStopMode(packageInfo.packageName)
                     AppInformationModel(
                         packageName = packageInfo.packageName,
                         name = appLabel ?: packageInfo.packageName,
@@ -39,6 +41,7 @@ private class GetDeviceAppsUseCaseImpl(
                         isRunning = isAppRunning,
                         isUsedRecently = isAppUsedRecently,
                         isInActive = isAppInActive,
+                        stopMode = AppForceStopMode.getModeByName(appStopMode),
                     )
                 }
             Result.success(appList)
