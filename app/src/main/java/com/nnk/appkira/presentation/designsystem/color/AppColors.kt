@@ -23,6 +23,7 @@ object AppColors {
 
     // Basic Colors
     val Green = Color(0xFF00C979)
+    val Blue = Color(0xFF0A9DFF)
     val Black = Color(0xFF000000)
     val White = Color(0xFFFFFFFF)
     val Red = Color(0xFFff3447)
