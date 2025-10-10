@@ -6,6 +6,10 @@ object AppDimen {
     val DimenZero = 0.dp
     val Dimen1 = 1.dp
     val Dimen2 = 2.dp
+    val Dimen3 = 3.dp
+    val Dimen5 = 5.dp
+    val Dimen6 = 6.dp
+    val Dimen7 = 7.dp
     val DimenX = 4.dp
     val Dimen2X = 8.dp
     val Dimen3X = 12.dp
@@ -16,4 +20,5 @@ object AppDimen {
     val Dimen8X = 32.dp
 
     val DimenAppInfoIconSize = 48.dp
+    val DimenAppStopModeIconSize = 40.dp
 }

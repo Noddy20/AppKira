@@ -2,6 +2,7 @@ package com.nnk.appkira.presentation.features.home.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,12 +15,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,9 +32,11 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nnk.appkira.domain.model.AppForceStopMode
 import com.nnk.appkira.domain.model.AppInformationModel
 import com.nnk.appkira.presentation.designsystem.color.AppColors
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
+import com.nnk.appkira.presentation.designsystem.widgets.AppStopModeButton
 import com.nnk.appkira.presentation.features.home.screens.home.viewmodel.HomeScreenViewModel
 
 @Composable
@@ -43,6 +50,7 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(AppDimen.Dimen2).fillMaxWidth())
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(AppDimen.DimenX),
         ) {
             items(items = items.value) { item ->
                 AppInfoItem(item)
@@ -57,68 +65,83 @@ private fun AppInfoItem(appInfo: AppInformationModel) {
     val statusColor = if (appInfo.isRunning) AppColors.Red else AppColors.Green
     val statusText = if (appInfo.isRunning) "Running" else "Idle"
 
-    Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = AppDimen.Dimen2X, horizontal = AppDimen.Dimen4X),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        // 1. App Launcher Icon
-        val bitmap =
-            remember(appInfo.icon) {
-                // Convert Android Drawable to Compose ImageBitmap
-                appInfo.icon!!.toBitmap(width = 96, height = 96).asImageBitmap()
-            }
-
-        Image(
-            bitmap = bitmap,
-            contentDescription = "App Icon: ${appInfo.name}",
+    Column {
+        Row(
             modifier =
                 Modifier
-                    .size(AppDimen.DimenAppInfoIconSize)
-                    .clip(RoundedCornerShape(AppDimen.Dimen3X))
-                    .background(AppColors.White),
-        )
-
-        Spacer(modifier = Modifier.width(AppDimen.Dimen4X))
-
-        Column(
-            modifier = Modifier.weight(1f),
+                    .fillMaxWidth()
+                    .padding(vertical = AppDimen.Dimen2X, horizontal = AppDimen.Dimen4X),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            // 2. App Name
-            Text(
-                text = appInfo.name,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-            )
-            // App Package Name (Subtitle)
-            Text(
-                text = appInfo.packageName,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-            )
-        }
+            // 1. App Launcher Icon
+            val bitmap =
+                remember(appInfo.icon) {
+                    // Convert Android Drawable to Compose ImageBitmap
+                    appInfo.icon!!.toBitmap(width = 96, height = 96).asImageBitmap()
+                }
 
-        Spacer(modifier = Modifier.width(AppDimen.Dimen4X))
+            Image(
+                bitmap = bitmap,
+                contentDescription = "App Icon: ${appInfo.name}",
+                modifier =
+                    Modifier
+                        .size(AppDimen.DimenAppInfoIconSize)
+                        .clip(RoundedCornerShape(AppDimen.Dimen3X))
+                        .background(AppColors.White),
+            )
 
-        // 3. Running Status Pill
-        AssistChip(
-            onClick = { /* Do nothing or open app settings */ },
-            label = {
+            Spacer(modifier = Modifier.width(AppDimen.Dimen4X))
+
+            Column(
+                modifier = Modifier.weight(1f),
+            ) {
+                // 2. App Name
                 Text(
-                    text = statusText,
-                    color = AppColors.White,
-                    style = MaterialTheme.typography.labelSmall,
+                    text = appInfo.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
                 )
-            },
-            modifier = Modifier.height(AppDimen.Dimen8X),
-            colors =
-                AssistChipDefaults.assistChipColors(
-                    containerColor = statusColor,
-                ),
+                // App Package Name (Subtitle)
+                Text(
+                    text = appInfo.packageName,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                )
+            }
+
+            Spacer(modifier = Modifier.width(AppDimen.Dimen4X))
+
+            var stopMode by remember { mutableStateOf(appInfo.stopMode) }
+            // 3. Running Status Pill
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(AppDimen.Dimen2X),
+            ) {
+                AppStopModeButton(
+                    mode = AppForceStopMode.Always,
+                    isSelected = stopMode == AppForceStopMode.Always,
+                ) {
+                    stopMode = it
+                }
+                AppStopModeButton(
+                    mode = AppForceStopMode.WhenInActive,
+                    isSelected = stopMode == AppForceStopMode.WhenInActive,
+                ) {
+                    stopMode = it
+                }
+                AppStopModeButton(
+                    mode = AppForceStopMode.Never,
+                    isSelected = stopMode == AppForceStopMode.Never,
+                ) {
+                    stopMode = it
+                }
+            }
+        }
+        HorizontalDivider(
+            thickness = AppDimen.Dimen1,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
         )
     }
 }
