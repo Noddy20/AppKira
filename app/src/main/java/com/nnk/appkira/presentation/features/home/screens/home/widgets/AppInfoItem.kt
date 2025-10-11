@@ -3,6 +3,8 @@ package com.nnk.appkira.presentation.features.home.screens.home.widgets
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,13 +38,21 @@ import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.widgets.AppStopModeButton
 
 @Composable
-fun AppInfoItem(appInfo: AppInformationModel) {
+fun AppInfoItem(
+    appInfo: AppInformationModel,
+    onClick: (appInfo: AppInformationModel) -> Unit,
+    onLongClick: (appInfo: AppInformationModel) -> Unit,
+) {
     Column {
         Row(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(vertical = AppDimen.Dimen2X, horizontal = AppDimen.Dimen4X),
+                    .padding(vertical = AppDimen.Dimen2X, horizontal = AppDimen.Dimen4X)
+                    .combinedClickable(
+                        onClick = { onClick(appInfo) },
+                        onLongClick = { onLongClick(appInfo) },
+                    ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AppInfoIcon(appInfo.icon, appInfo.name)

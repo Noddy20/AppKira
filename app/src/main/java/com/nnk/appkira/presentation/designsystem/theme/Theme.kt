@@ -95,8 +95,16 @@ private val typography: Typography
             labelSmall =
                 TextStyle(
                     fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.SemiBold,
                     fontSize = FontSize.LabelSmall,
+                    lineHeight = FontSize.LabelLineHeight,
+                    letterSpacing = FontSize.LabelLetterSpacing,
+                ),
+            labelMedium =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = FontSize.LabelMedium,
                     lineHeight = FontSize.LabelLineHeight,
                     letterSpacing = FontSize.LabelLetterSpacing,
                 ),
