@@ -20,51 +20,92 @@ import com.nnk.appkira.presentation.designsystem.dimen.FontSize
 private val darkColorScheme: ColorScheme
     get() =
         darkColorScheme(
-            primary = AppColors.Dark,
-            secondary = AppColors.DarkX,
-            tertiary = AppColors.Green,
+            primary = AppColors.Green,
+            onPrimary = AppColors.White,
+            background = AppColors.DarkBackground,
+            onBackground = AppColors.OnDarkMain,
+            surface = AppColors.DarkBackground,
+            onSurface = AppColors.OnDarkVar,
+            onError = AppColors.Red,
         )
 private val lightColorScheme: ColorScheme
     get() =
         lightColorScheme(
-            primary = AppColors.Light,
-            secondary = AppColors.LightX,
-            tertiary = AppColors.Green,
+            primary = AppColors.Green,
+            onPrimary = AppColors.White,
+            background = AppColors.LightBackground,
+            onBackground = AppColors.OnLightMain,
+            surface = AppColors.LightBackground,
+            surfaceTint = AppColors.Transparent,
+            onSurface = AppColors.OnLightVar,
+            onError = AppColors.Red,
         )
 
 private val typography: Typography
     get() =
         Typography(
+            titleLarge =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = FontSize.TitleLarge,
+                    lineHeight = FontSize.TitleLineHeight,
+                    letterSpacing = FontSize.TitleLetterSpacing,
+                ),
+            titleMedium =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = FontSize.TitleMedium,
+                    lineHeight = FontSize.TitleLineHeight,
+                    letterSpacing = FontSize.TitleLetterSpacing,
+                ),
+            titleSmall =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = FontSize.TitleSmall,
+                    lineHeight = FontSize.TitleLineHeight,
+                    letterSpacing = FontSize.TitleLetterSpacing,
+                ),
             bodyLarge =
                 TextStyle(
                     fontFamily = FontFamily.Default,
                     fontWeight = FontWeight.Normal,
-                    fontSize = FontSize.FontSizeNormal,
-                    lineHeight = FontSize.LineHeight,
-                    letterSpacing = FontSize.LetterSpacing,
+                    fontSize = FontSize.BodyLarge,
+                    lineHeight = FontSize.BodyLineHeight,
+                    letterSpacing = FontSize.BodyLetterSpacing,
                 ),
-        /* Other default text styles to override
-        titleLarge = TextStyle(
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal,
-            fontSize = 22.sp,
-            lineHeight = 28.sp,
-            letterSpacing = 0.sp
-        ),
-        labelSmall = TextStyle(
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Medium,
-            fontSize = 11.sp,
-            lineHeight = 16.sp,
-            letterSpacing = 0.5.sp
-        )
-         */
+            bodyMedium =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = FontSize.BodyMedium,
+                    lineHeight = FontSize.BodyLineHeight,
+                    letterSpacing = FontSize.BodyLetterSpacing,
+                ),
+            bodySmall =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = FontSize.BodySmall,
+                    lineHeight = FontSize.BodyLineHeight,
+                    letterSpacing = FontSize.BodyLetterSpacing,
+                ),
+            labelSmall =
+                TextStyle(
+                    fontFamily = FontFamily.Default,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = FontSize.LabelSmall,
+                    lineHeight = FontSize.LabelLineHeight,
+                    letterSpacing = FontSize.LabelLetterSpacing,
+                ),
         )
 
 @Composable
 fun AppKiraTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val colorScheme =
