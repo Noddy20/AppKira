@@ -23,7 +23,7 @@ object AppColors {
     val Blue = Color(0xFF0A9DFF)
     val Black = Color(0xFF000000)
     val White = Color(0xFFFFFFFF)
-    val Red = Color(0xFFBD012A)
+    val Red = Color(0xFFFF3447)
 
     // Transparent
     val Transparent = Color(0x00000000)

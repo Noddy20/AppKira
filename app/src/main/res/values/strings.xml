@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AppKira</string>
+    <string name="inactive">Inactive</string>
+
+    <!-- Content Descriptions -->
+    <string name="content_desc_app_info_icon">%s app icon</string>
 </resources>
