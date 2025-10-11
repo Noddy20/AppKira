@@ -16,6 +16,7 @@ object FontSize {
     val BodyLetterSpacing = 0.5.sp
 
     val LabelSmall = 11.sp
+    val LabelMedium = 14.sp
     val LabelLineHeight = 24.sp
     val LabelLetterSpacing = 0.5.sp
 }
