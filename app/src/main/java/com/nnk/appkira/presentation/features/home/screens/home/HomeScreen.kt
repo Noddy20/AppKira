@@ -1,5 +1,6 @@
 package com.nnk.appkira.presentation.features.home.screens.home
 
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,9 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.nnk.appkira.R
 import com.nnk.appkira.domain.model.AppForceStopMode
 import com.nnk.appkira.domain.model.AppInformationModel
 import com.nnk.appkira.presentation.designsystem.color.AppColors
@@ -46,8 +50,6 @@ fun HomeScreen() {
     val items = viewModel.list.collectAsStateWithLifecycle(initialValue = emptyList())
 
     Column {
-        Text("Total Apps: ${items.value.size}")
-        Spacer(modifier = Modifier.height(AppDimen.Dimen2).fillMaxWidth())
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(AppDimen.DimenX),
@@ -61,10 +63,7 @@ fun HomeScreen() {
 
 @Composable
 private fun AppInfoItem(appInfo: AppInformationModel) {
-    // Determine the color and text for the running status pill
-    val statusColor = if (appInfo.isRunning) AppColors.Red else AppColors.Green
-    val statusText = if (appInfo.isRunning) "Running" else "Idle"
-
+    val context = LocalContext.current
     Column {
         Row(
             modifier =
@@ -73,21 +72,20 @@ private fun AppInfoItem(appInfo: AppInformationModel) {
                     .padding(vertical = AppDimen.Dimen2X, horizontal = AppDimen.Dimen4X),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            // 1. App Launcher Icon
             val bitmap =
                 remember(appInfo.icon) {
-                    // Convert Android Drawable to Compose ImageBitmap
-                    appInfo.icon!!.toBitmap(width = 96, height = 96).asImageBitmap()
+                    val icon = appInfo.icon ?: context.getDrawable(R.drawable.ic_default_app)
+                    icon?.toBitmap(width = 96, height = 96)?.asImageBitmap()
                 }
 
             Image(
-                bitmap = bitmap,
+                bitmap = bitmap!!,
                 contentDescription = "App Icon: ${appInfo.name}",
                 modifier =
                     Modifier
                         .size(AppDimen.DimenAppInfoIconSize)
                         .clip(RoundedCornerShape(AppDimen.Dimen3X))
-                        .background(AppColors.White),
+                        .background(MaterialTheme.colorScheme.background),
             )
 
             Spacer(modifier = Modifier.width(AppDimen.Dimen4X))
@@ -99,14 +97,13 @@ private fun AppInfoItem(appInfo: AppInformationModel) {
                 Text(
                     text = appInfo.name,
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = MaterialTheme.colorScheme.onBackground,
                     maxLines = 1,
                 )
-                // App Package Name (Subtitle)
                 Text(
                     text = appInfo.packageName,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                 )
             }
