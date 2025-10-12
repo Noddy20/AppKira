@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">AppKira</string>
     <string name="inactive">Inactive</string>
-    <string name="running_apps">Running Apps</string>
-    <string name="all_apps">All Apps</string>
+    <string name="running_apps">Running Apps : %d</string>
+    <string name="all_apps">All Apps : %d</string>
+    <string name="error_generic_message">Something went wrong! Please try again or report the error.</string>
+    <string name="try_again">Try Again</string>
+    <string name="report_error">Report Error</string>
+    <string name="error_log_copied">Error log copied to clipboard</string>
 
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
