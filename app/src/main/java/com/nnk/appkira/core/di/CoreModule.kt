@@ -2,6 +2,7 @@ package com.nnk.appkira.core.di
 
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
+import com.nnk.appkira.core.coroutines.DispatchersProvider
 import com.nnk.appkira.core.storage.AppPreferences
 import com.nnk.appkira.core.system.PermissionManager
 import dagger.Module
@@ -24,6 +25,10 @@ object CoreModule {
     fun providesPermissionManager(
         @ApplicationContext context: Context,
     ): PermissionManager = PermissionManager.getInstance(context)
+
+    @Provides
+    @Singleton
+    fun providesDispatcherProvider() = DispatchersProvider.getInstance()
 }
 
 private val Context.appPreferencesDataStore by preferencesDataStore("app_kira_prefs")
