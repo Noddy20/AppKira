@@ -1,0 +1,20 @@
+package com.nnk.appkira.presentation.features.intro
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class IntroActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            AppKiraTheme {
+            }
+        }
+    }
+}
