@@ -7,6 +7,9 @@
     <string name="try_again">Try Again</string>
     <string name="report_error">Report Error</string>
     <string name="error_log_copied">Error log copied to clipboard</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
 
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
