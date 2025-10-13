@@ -19,4 +19,7 @@ object FontSize {
     val LabelMedium = 14.sp
     val LabelLineHeight = 24.sp
     val LabelLetterSpacing = 0.5.sp
+
+    val TitleWelcomeScreen = 36.sp
+    val AppNameWelcomeScreen = 42.sp
 }
