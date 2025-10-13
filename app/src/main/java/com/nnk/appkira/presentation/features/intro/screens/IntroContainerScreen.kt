@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import com.nnk.appkira.R
 import com.nnk.appkira.presentation.designsystem.color.AppColors
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
+import com.nnk.appkira.presentation.features.intro.screens.welcome.WelcomeScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -125,7 +126,19 @@ fun IntroContainerScreen(onFinish: () -> Unit) {
                     .fillMaxSize()
                     .padding(paddingValues),
         ) { page ->
-            Text("Page $page")
+            when (page) {
+                0 -> {
+                    WelcomeScreen()
+                }
+
+                1 -> {
+                    Text("Page $page")
+                }
+
+                2 -> {
+                    Text("Page $page")
+                }
+            }
         }
     }
 }

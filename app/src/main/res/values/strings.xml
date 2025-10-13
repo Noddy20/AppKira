@@ -10,7 +10,9 @@
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
+    <string name="welcome_title">Welcome to</string>
 
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
+    <string name="content_desc_app_kira_logo">App Kira logo</string>
 </resources>

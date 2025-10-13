@@ -21,4 +21,5 @@ object AppDimen {
 
     val DimenAppInfoIconSize = 48.dp
     val DimenAppStopModeIconSize = 40.dp
+    val DimenAppWelcomeLogo = 48.dp
 }
