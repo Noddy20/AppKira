@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import com.nnk.appkira.R
 import com.nnk.appkira.presentation.designsystem.color.AppColors
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
+import com.nnk.appkira.presentation.features.intro.screens.modes.IntroModesScreen
 import com.nnk.appkira.presentation.features.intro.screens.welcome.WelcomeScreen
 import kotlinx.coroutines.launch
 
@@ -132,7 +133,7 @@ fun IntroContainerScreen(onFinish: () -> Unit) {
                 }
 
                 1 -> {
-                    Text("Page $page")
+                    IntroModesScreen()
                 }
 
                 2 -> {
