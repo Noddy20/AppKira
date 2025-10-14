@@ -6,7 +6,7 @@ object FontSize {
     val TitleLarge = 22.sp
     val TitleMedium = 18.sp
     val TitleSmall = 16.sp
-    val TitleLineHeight = 12.sp
+    val TitleLineHeight = 22.sp
     val TitleLetterSpacing = 0.5.sp
 
     val BodyLarge = 16.sp
@@ -22,4 +22,5 @@ object FontSize {
 
     val TitleWelcomeScreen = 36.sp
     val AppNameWelcomeScreen = 42.sp
+    val TitleModesScreen = 32.sp
 }

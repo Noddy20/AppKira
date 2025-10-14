@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">AppKira</string>
+    <string name="empty_string"/>
     <string name="inactive">Inactive</string>
     <string name="running_apps">Running Apps : %d</string>
     <string name="all_apps">All Apps : %d</string>
@@ -11,8 +12,13 @@
     <string name="next">Next</string>
     <string name="finish">Finish</string>
     <string name="welcome_title">Welcome to</string>
+    <string name="stop_modes">Stop Modes</string>
+    <string name="stop_modes_description">There are 3 stop modes, You can select one for each app. Below is more information about each mode -</string>
+    <string name="stop_mode_always">Always Stop</string>
+    <string name="stop_mode_always_description">Always Stop</string>
 
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
     <string name="content_desc_app_kira_logo">App Kira logo</string>
+    <string name="content_desc_selected_stop_mode_arrow">Selected stop mode arrow</string>
 </resources>

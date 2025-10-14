@@ -24,7 +24,7 @@ private val darkColorScheme: ColorScheme
             onPrimary = AppColors.White,
             background = AppColors.DarkBackground,
             onBackground = AppColors.OnDarkMain,
-            surface = AppColors.DarkBackground,
+            surface = AppColors.DarkSurface,
             onSurface = AppColors.OnDarkVar,
             onError = AppColors.Red,
         )
@@ -35,7 +35,7 @@ private val lightColorScheme: ColorScheme
             onPrimary = AppColors.White,
             background = AppColors.LightBackground,
             onBackground = AppColors.OnLightMain,
-            surface = AppColors.LightBackground,
+            surface = AppColors.LightSurface,
             surfaceTint = AppColors.Transparent,
             onSurface = AppColors.OnLightVar,
             onError = AppColors.Red,
