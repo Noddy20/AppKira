@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,12 +21,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.nnk.appkira.R
 import com.nnk.appkira.domain.model.AppForceStopMode
-import com.nnk.appkira.presentation.designsystem.color.AppColors
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.dimen.FontSize
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
@@ -60,11 +62,19 @@ fun IntroModesScreen() {
             modifier = Modifier.weight(1f),
         )
 
+        val warningMessage =
+            buildAnnotatedString {
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append(stringResource(R.string.warning))
+                    append(": ")
+                }
+                append(stringResource(R.string.stop_mode_warning_message))
+            }
         Text(
             modifier = Modifier.padding(horizontal = AppDimen.Dimen4X),
-            text = stringResource(R.string.empty_string),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary,
+            text = warningMessage,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
@@ -129,11 +139,32 @@ private fun ModesInfoCard(modifier: Modifier) {
             )
         }
 
-        val modeDescriptionRes =
+        val (modeTitleRes, modeDescriptionRes) =
             when (selectedMode) {
-                AppForceStopMode.Always -> R.string.stop_mode_always_description
-                AppForceStopMode.WhenInActive -> R.string.stop_mode_when_inactive_description
-                AppForceStopMode.Never -> R.string.stop_mode_never_description
+                AppForceStopMode.Always ->
+                    Pair(
+                        R.string.stop_mode_always,
+                        R.string.stop_mode_always_description,
+                    )
+                AppForceStopMode.WhenInActive ->
+                    Pair(
+                        R.string.stop_mode_when_inactive,
+                        R.string.stop_mode_when_inactive_description,
+                    )
+                AppForceStopMode.Never ->
+                    Pair(
+                        R.string.stop_mode_never,
+                        R.string.stop_mode_never_description,
+                    )
+            }
+
+        val modeDescription =
+            buildAnnotatedString {
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append(stringResource(modeTitleRes))
+                    append(": ")
+                }
+                append(stringResource(modeDescriptionRes))
             }
         Text(
             modifier =
@@ -147,7 +178,7 @@ private fun ModesInfoCard(modifier: Modifier) {
                                 bottomEnd = AppDimen.Dimen4X,
                             ),
                     ).padding(all = AppDimen.Dimen4X),
-            text = stringResource(modeDescriptionRes),
+            text = modeDescription,
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.bodyLarge,
         )
