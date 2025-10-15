@@ -128,6 +128,13 @@ private fun ModesInfoCard(modifier: Modifier) {
                 },
             )
         }
+
+        val modeDescriptionRes =
+            when (selectedMode) {
+                AppForceStopMode.Always -> R.string.stop_mode_always_description
+                AppForceStopMode.WhenInActive -> R.string.stop_mode_when_inactive_description
+                AppForceStopMode.Never -> R.string.stop_mode_never_description
+            }
         Text(
             modifier =
                 Modifier
@@ -140,7 +147,9 @@ private fun ModesInfoCard(modifier: Modifier) {
                                 bottomEnd = AppDimen.Dimen4X,
                             ),
                     ).padding(all = AppDimen.Dimen4X),
-            text = stringResource(R.string.empty_string),
+            text = stringResource(modeDescriptionRes),
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }

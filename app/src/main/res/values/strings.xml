@@ -15,7 +15,9 @@
     <string name="stop_modes">Stop Modes</string>
     <string name="stop_modes_description">There are 3 stop modes, You can select one for each app. Below is more information about each mode -</string>
     <string name="stop_mode_always">Always Stop</string>
-    <string name="stop_mode_always_description">Always Stop</string>
+    <string name="stop_mode_always_description"><b>Always:</b> This mode will stop the app always if the app is running</string>
+    <string name="stop_mode_when_inactive_description"><b>When Inactive:</b> This mode will stop the app only if it is running and has not been used for some time (default 3 days)</string>
+    <string name="stop_mode_never_description"><b>Never:</b> This mode will never stop the app (choose this for apps like - chat, calling etc.)</string>
 
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
