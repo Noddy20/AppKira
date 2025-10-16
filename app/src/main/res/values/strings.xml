@@ -22,6 +22,8 @@
     <string name="stop_mode_when_inactive_description">This mode will stop the app only if it is running and has not been used for some time (default 3 days).\n\nThis is the preferred mode. The app will stop only after a period of inactivity, balancing battery savings with usability.</string>
     <string name="stop_mode_never_description">This mode will never stop the app.\n\nSelect this mode for essential apps (chat, calling, security) that need continuous, real-time access and notifications.</string>
     <string name="stop_mode_warning_message">Frequent force stops may quickly drain your device\'s battery. Restarting a force-stopped app requires a power-intensive cold start.</string>
+    <string name="permission">Permission</string>
+    <string name="permission_description">AppKira requires the following permissions and settings to automate the apps force stop process for you -</string>
 
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
