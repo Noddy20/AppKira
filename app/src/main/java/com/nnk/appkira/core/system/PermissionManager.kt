@@ -43,6 +43,7 @@ private class PermissionManagerImpl(
     override fun launchUsageAccessSettings() {
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         intent.data = Uri.fromParts("package", context.packageName, null)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 }

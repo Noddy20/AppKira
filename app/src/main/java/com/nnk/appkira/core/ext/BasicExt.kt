@@ -3,6 +3,7 @@ package com.nnk.appkira.core.ext
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.widget.Toast
 import com.nnk.appkira.core.logger.Logger
 
 fun String.Companion.empty() = ""
@@ -18,4 +19,13 @@ fun Context.copyContentToClipboard(
     } catch (e: Exception) {
         Logger.e("Error copying to clipboard", e)
     }
+}
+
+fun Context.toast(message: String) {
+    Toast
+        .makeText(
+            this,
+            message,
+            Toast.LENGTH_SHORT,
+        ).show()
 }
