@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import com.nnk.appkira.R
+import com.nnk.appkira.core.system.PermissionManager
 import com.nnk.appkira.presentation.designsystem.color.AppColors
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.features.intro.screens.modes.IntroModesScreen
@@ -37,7 +38,10 @@ import com.nnk.appkira.presentation.features.intro.screens.welcome.WelcomeScreen
 import kotlinx.coroutines.launch
 
 @Composable
-fun IntroContainerScreen(onFinish: () -> Unit) {
+fun IntroContainerScreen(
+    permissionManager: PermissionManager,
+    onFinish: () -> Unit,
+) {
     val pageCount = 3
     val pagerState = rememberPagerState(initialPage = 0) { pageCount }
     val scope = rememberCoroutineScope()
@@ -138,7 +142,9 @@ fun IntroContainerScreen(onFinish: () -> Unit) {
                 }
 
                 2 -> {
-                    PermissionScreen()
+                    PermissionScreen(
+                        permissionManager = permissionManager,
+                    )
                 }
             }
         }

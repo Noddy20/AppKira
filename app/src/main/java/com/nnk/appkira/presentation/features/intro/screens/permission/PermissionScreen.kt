@@ -11,17 +11,39 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.nnk.appkira.R
+import com.nnk.appkira.core.ext.toast
+import com.nnk.appkira.core.system.PermissionManager
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.dimen.FontSize
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
 
 @Composable
-fun PermissionScreen() {
+fun PermissionScreen(permissionManager: PermissionManager) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val lifecycleState by lifecycleOwner.lifecycle.currentStateFlow.collectAsState()
+    var isUsagePermissionGranted by remember { mutableStateOf(permissionManager.isUsageStatePermissionGranted()) }
+
+    LaunchedEffect(lifecycleState) {
+        if (lifecycleState == Lifecycle.State.RESUMED) {
+            isUsagePermissionGranted = permissionManager.isUsageStatePermissionGranted()
+        }
+    }
+
     Column(
         modifier =
             Modifier
@@ -51,8 +73,13 @@ fun PermissionScreen() {
 
         PermissionButton(
             text = stringResource(R.string.permission_usage_access),
-            isChecked = false,
-        ) {
+            isChecked = isUsagePermissionGranted,
+        ) { isChecked ->
+            if (isUsagePermissionGranted) {
+                context.toast(context.getString(R.string.permission_already_granted))
+            } else {
+                permissionManager.launchUsageAccessSettings()
+            }
         }
     }
 }
@@ -95,6 +122,8 @@ private fun PermissionButton(
 @Composable
 fun PreviewPermissionScreen() {
     AppKiraTheme {
-        PermissionScreen()
+        PermissionScreen(
+            permissionManager = PermissionManager.getInstance(LocalContext.current),
+        )
     }
 }

@@ -25,7 +25,10 @@
     <string name="permission">Permission</string>
     <string name="permission_description">AppKira requires the following permissions and settings to automate the apps force stop process for you -</string>
     <string name="permission_usage_access">Usage Access</string>
-    
+    <string name="permission_already_granted">Permission already granted \u2713</string>
+    <string name="grant_required_permissions">Grant required permissions!</string>
+
+
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
     <string name="content_desc_app_kira_logo">App Kira logo</string>
