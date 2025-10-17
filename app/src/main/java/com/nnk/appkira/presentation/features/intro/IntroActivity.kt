@@ -24,7 +24,7 @@ class IntroActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AppKiraTheme(darkTheme = true) {
+            AppKiraTheme {
                 IntroContainerScreen(permissionManager) {
                     if (permissionManager.isUsageStatePermissionGranted()) {
                         startActivity(HomeActivity.getIntent(this))
