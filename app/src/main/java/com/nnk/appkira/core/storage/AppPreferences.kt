@@ -2,6 +2,7 @@ package com.nnk.appkira.core.storage
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -26,6 +27,10 @@ interface AppPreferences {
     suspend fun getAutoForceStopDelayInMillis(): Long
 
     suspend fun setAutoForceStopDelay(delayInMillis: Long)
+
+    suspend fun getAppIntroShownStatus(): Boolean
+
+    suspend fun setAppIntroShownStatus()
 
     companion object {
         fun getInstance(preferences: DataStore<Preferences>): AppPreferences = AppPreferencesImpl(preferences)
@@ -74,9 +79,22 @@ private class AppPreferencesImpl(
         }
     }
 
+    override suspend fun getAppIntroShownStatus(): Boolean =
+        preferences.data
+            .map { prefs ->
+                prefs[KEY_APP_INTRO_SHOWN_PREF] ?: false
+            }.first()
+
+    override suspend fun setAppIntroShownStatus() {
+        preferences.edit { prefs ->
+            prefs[KEY_APP_INTRO_SHOWN_PREF] = true
+        }
+    }
+
     companion object {
         private val KEY_SHOW_SPECIAL_APPS_PREF = stringSetPreferencesKey("show_special_apps_pref")
         private val KEY_AUTO_FORCE_STOP_DELAY_PREF = longPreferencesKey("auto_force_stop_delay_pref")
+        private val KEY_APP_INTRO_SHOWN_PREF = booleanPreferencesKey("app_intro_shown_pref")
 
         private fun keyAppForceStopModePref(packageName: String) = stringPreferencesKey("$packageName-app_force_stop_mode_pref")
     }
