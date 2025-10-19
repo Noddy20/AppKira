@@ -61,6 +61,7 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
     implementation(libs.datastore.core)
     implementation(libs.datastore.preferences)
+    implementation(libs.libsuperuser)
 
     testImplementation(libs.junit)
 
