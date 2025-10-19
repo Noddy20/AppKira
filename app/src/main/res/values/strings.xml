@@ -28,6 +28,15 @@
     <string name="permission_already_granted">Permission already granted \u2713</string>
     <string name="grant_required_permissions">Grant required permissions!</string>
 
+    <string name="accessibility_service_description">Enabling this feature allows AppKira to automatically force stop apps without manual intervention.
+\n
+\nAdvantages:
+\n• No user interaction required: The process is faster and eliminates the need for users to know the manual steps for force-stopping apps.
+\n• Accessibility for disabled users: Users with disabilities can trigger the AppKira shortcut (e.g., via speech recognition) to automatically freeze all running apps.
+\n
+\nAppKira relies on the Android Accessibility Service to perform the necessary actions for automated force stopping:
+\n• It simulates taps on the "FORCE STOP," "OK," and "Back" buttons within the app settings.
+\n• The Accessibility Service is also used on newer Android versions to lock the screen immediately after the apps have been frozen.</string>
 
     <!-- Content Descriptions -->
     <string name="content_desc_app_info_icon">%s app icon</string>
