@@ -12,6 +12,4 @@ lintStatus=$?
 # return 1 exit code if running checks fails
 [ $lintStatus -ne 0 ] && exit 1
 
-git add .
-
 exit 0
