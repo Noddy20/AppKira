@@ -8,8 +8,11 @@ echo "
 ./gradlew --no-daemon --stacktrace :app:formatKotlin :app:lintKotlin
 
 lintStatus=$?
-
-# return 1 exit code if running checks fails
-[ $lintStatus -ne 0 ] && exit 1
-
-exit 0
+echo "detektStatus Result :"
+if [ "$lintStatus" = 0 ]; then
+    echo "No issues were found, committing changes."
+    exit 0
+else
+    echo 1>&2 "Need to fix issues before commit."
+    exit 1
+fi
