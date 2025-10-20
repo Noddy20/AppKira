@@ -27,7 +27,7 @@
     <string name="permission_usage_access">Usage Access</string>
     <string name="permission_already_granted">Permission already granted \u2713</string>
     <string name="grant_required_permissions">Grant required permissions!</string>
-
+    <string name="apps_list">Apps list</string>
     <string name="accessibility_service_description">Enabling this feature allows AppKira to automatically force stop apps without manual intervention.
 \n
 \nAdvantages:
@@ -42,4 +42,5 @@
     <string name="content_desc_app_info_icon">%s app icon</string>
     <string name="content_desc_app_kira_logo">App Kira logo</string>
     <string name="content_desc_selected_stop_mode_arrow">Selected stop mode arrow</string>
+    <string name="content_desc_info_list_icon">%s icon</string>
 </resources>
