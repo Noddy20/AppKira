@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +40,10 @@ fun DashboardScreen() {
         ListItem(
             icon = Icons.AutoMirrored.Default.List,
             text = stringResource(R.string.apps_list),
+        )
+        ListItem(
+            icon = Icons.Default.DateRange,
+            text = stringResource(R.string.inactive_stop_interval),
         )
     }
 }
