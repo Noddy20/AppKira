@@ -28,6 +28,7 @@
     <string name="permission_already_granted">Permission already granted \u2713</string>
     <string name="grant_required_permissions">Grant required permissions!</string>
     <string name="apps_list">Apps list</string>
+    <string name="inactive_stop_interval">Inactive stop interval</string>
     <string name="accessibility_service_description">Enabling this feature allows AppKira to automatically force stop apps without manual intervention.
 \n
 \nAdvantages:
