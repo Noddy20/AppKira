@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.HorizontalDivider
@@ -50,6 +51,10 @@ fun DashboardScreen() {
         ListItem(
             icon = Icons.Default.PlayArrow,
             text = stringResource(R.string.launch_intro_screen),
+        )
+        ListItem(
+            icon = Icons.Default.Edit,
+            text = stringResource(R.string.report_issue),
         )
     }
 }
