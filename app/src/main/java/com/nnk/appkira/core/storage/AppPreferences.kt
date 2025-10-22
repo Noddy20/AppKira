@@ -70,7 +70,7 @@ private class AppPreferencesImpl(
     override suspend fun getAutoForceStopDelayInMillis(): Long =
         preferences.data
             .map { prefs ->
-                prefs[KEY_AUTO_FORCE_STOP_DELAY_PREF] ?: AutoForceStopDelay.ONE_WEEK.delayInMillis
+                prefs[KEY_AUTO_FORCE_STOP_DELAY_PREF] ?: AutoForceStopDelay.THREE_DAYS.delayInMillis
             }.first()
 
     override suspend fun setAutoForceStopDelay(delayInMillis: Long) {

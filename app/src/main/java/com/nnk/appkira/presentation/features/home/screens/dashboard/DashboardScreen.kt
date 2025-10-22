@@ -1,6 +1,5 @@
 package com.nnk.appkira.presentation.features.home.screens.dashboard
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +11,6 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.nnk.appkira.R
+import com.nnk.appkira.domain.model.AppForceStopMode
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
 
@@ -42,19 +41,27 @@ fun DashboardScreen() {
         )
         ListItem(
             icon = Icons.AutoMirrored.Default.List,
-            text = stringResource(R.string.apps_list),
+            title = stringResource(R.string.apps_list),
+            subTitle = stringResource(R.string.apps_list_subtitle),
         )
         ListItem(
             icon = Icons.Default.DateRange,
-            text = stringResource(R.string.inactive_stop_interval),
+            title = stringResource(R.string.inactive_stop_interval),
+            subTitle =
+                stringResource(
+                    R.string.inactive_stop_interval_subtitle,
+                    3,
+                    stringResource(R.string.days),
+                ),
         )
         ListItem(
             icon = Icons.Default.PlayArrow,
-            text = stringResource(R.string.launch_intro_screen),
+            title = stringResource(R.string.launch_intro_screen),
         )
         ListItem(
             icon = Icons.Default.Edit,
-            text = stringResource(R.string.report_issue),
+            title = stringResource(R.string.report_issue),
+            subTitle = stringResource(R.string.report_issue_subtitle),
         )
     }
 }
@@ -62,7 +69,8 @@ fun DashboardScreen() {
 @Composable
 private fun ListItem(
     icon: ImageVector,
-    text: String,
+    title: String,
+    subTitle: String? = null,
 ) {
     Row(
         modifier =
@@ -70,21 +78,31 @@ private fun ListItem(
                 .fillMaxWidth()
                 .padding(
                     horizontal = AppDimen.Dimen4X,
-                    vertical = AppDimen.Dimen5X,
+                    vertical = AppDimen.Dimen4X,
                 ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppDimen.Dimen4X),
     ) {
         Icon(
             imageVector = icon,
-            contentDescription = stringResource(R.string.content_desc_info_list_icon, text),
+            contentDescription = stringResource(R.string.content_desc_info_list_icon, title),
             tint = MaterialTheme.colorScheme.onBackground,
         )
-        Text(
-            text = text,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
+        Column {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+            if (subTitle != null) {
+                Text(
+                    modifier = Modifier.padding(top = AppDimen.DimenX),
+                    text = subTitle,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
+                )
+            }
+        }
     }
     HorizontalDivider(
         modifier = Modifier,
