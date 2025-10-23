@@ -19,7 +19,7 @@ object AppExternalNavigator {
         context.startActivity(intent)
     }
 
-    fun launchAppKiraGitRepo(context: Context) {
+    fun launchAppKiraGitRepoIssues(context: Context) {
         try {
             val gitUrl = "https://github.com/Noddy20/AppKira/issues"
             val intent = Intent(Intent.ACTION_VIEW, gitUrl.toUri())
