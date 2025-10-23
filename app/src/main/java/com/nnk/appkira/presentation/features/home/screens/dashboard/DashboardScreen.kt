@@ -1,5 +1,6 @@
 package com.nnk.appkira.presentation.features.home.screens.dashboard
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,15 +20,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.nnk.appkira.R
-import com.nnk.appkira.domain.model.AppForceStopMode
+import com.nnk.appkira.core.system.AppExternalNavigator
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
 
 @Composable
 fun DashboardScreen() {
+    val context = LocalContext.current
     Column(
         modifier =
             Modifier
@@ -62,7 +65,9 @@ fun DashboardScreen() {
             icon = Icons.Default.Edit,
             title = stringResource(R.string.report_issue),
             subTitle = stringResource(R.string.report_issue_subtitle),
-        )
+        ) {
+            AppExternalNavigator.launchAppKiraGitRepoIssues(context)
+        }
     }
 }
 
@@ -71,6 +76,7 @@ private fun ListItem(
     icon: ImageVector,
     title: String,
     subTitle: String? = null,
+    onClick: () -> Unit = { },
 ) {
     Row(
         modifier =
@@ -79,6 +85,8 @@ private fun ListItem(
                 .padding(
                     horizontal = AppDimen.Dimen4X,
                     vertical = AppDimen.Dimen4X,
+                ).clickable(
+                    onClick = onClick,
                 ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppDimen.Dimen4X),
