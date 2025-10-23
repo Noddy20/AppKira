@@ -5,7 +5,7 @@ echo "
 ===============
 "
 
-./gradlew --no-daemon --stacktrace :app:formatKotlin :app:lintKotlin
+./gradlew --no-daemon --stacktrace :app:lintKotlin
 
 lintStatus=$?
 echo "detektStatus Result :"
