@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -58,6 +59,7 @@ fun DashboardScreen() {
                     3,
                     stringResource(R.string.days),
                 ),
+            isEnabled = false,
         )
         ListItem(
             icon = Icons.Default.PlayArrow,
@@ -81,6 +83,7 @@ private fun ListItem(
     icon: ImageVector,
     title: String,
     subTitle: String? = null,
+    isEnabled: Boolean = true,
     onClick: () -> Unit = { },
 ) {
     Row(
@@ -91,7 +94,10 @@ private fun ListItem(
                     horizontal = AppDimen.Dimen4X,
                     vertical = AppDimen.Dimen4X,
                 ).clickable(
+                    enabled = isEnabled,
                     onClick = onClick,
+                ).alpha(
+                    if (isEnabled) 1.0f else 0.6f,
                 ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AppDimen.Dimen4X),
