@@ -1,5 +1,6 @@
 package com.nnk.appkira.presentation.features.home.screens.dashboard
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import com.nnk.appkira.R
 import com.nnk.appkira.core.system.AppExternalNavigator
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
+import com.nnk.appkira.presentation.features.intro.IntroActivity
 
 @Composable
 fun DashboardScreen() {
@@ -60,7 +62,10 @@ fun DashboardScreen() {
         ListItem(
             icon = Icons.Default.PlayArrow,
             title = stringResource(R.string.launch_intro_screen),
-        )
+        ) {
+            context.startActivity(IntroActivity.getIntent(context))
+            (context as ComponentActivity).finish()
+        }
         ListItem(
             icon = Icons.Default.Edit,
             title = stringResource(R.string.report_issue),
