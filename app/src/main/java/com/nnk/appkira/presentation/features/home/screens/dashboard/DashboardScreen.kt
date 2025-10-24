@@ -18,6 +18,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -27,13 +31,31 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.nnk.appkira.R
 import com.nnk.appkira.core.system.AppExternalNavigator
+import com.nnk.appkira.data.features.home.SpecialApp
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
+import com.nnk.appkira.presentation.features.home.screens.dashboard.widgets.AppsListSettingsDialog
 import com.nnk.appkira.presentation.features.intro.IntroActivity
 
 @Composable
 fun DashboardScreen() {
     val context = LocalContext.current
+
+    var isAppsListDialogShown by remember { mutableStateOf(false) }
+    val appsList = SpecialApp.entries
+
+    if (isAppsListDialogShown) {
+        AppsListSettingsDialog(
+            appsList = appsList,
+            onCancel = {
+                isAppsListDialogShown = false
+            },
+            onSave = {
+                isAppsListDialogShown = false
+            },
+        )
+    }
+
     Column(
         modifier =
             Modifier
@@ -49,7 +71,11 @@ fun DashboardScreen() {
             icon = Icons.AutoMirrored.Default.List,
             title = stringResource(R.string.apps_list),
             subTitle = stringResource(R.string.apps_list_subtitle),
-        )
+        ) {
+            if (isAppsListDialogShown.not()) {
+                isAppsListDialogShown = true
+            }
+        }
         ListItem(
             icon = Icons.Default.DateRange,
             title = stringResource(R.string.inactive_stop_interval),
