@@ -1,4 +1,4 @@
-package com.nnk.appkira.presentation.features.home.screens.dashboard
+package com.nnk.appkira.presentation.features.home.screens.settings
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
@@ -34,11 +34,11 @@ import com.nnk.appkira.core.system.AppExternalNavigator
 import com.nnk.appkira.data.features.home.SpecialApp
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
-import com.nnk.appkira.presentation.features.home.screens.dashboard.widgets.AppsListSettingsDialog
+import com.nnk.appkira.presentation.features.home.screens.settings.widgets.AppsListSettingsDialog
 import com.nnk.appkira.presentation.features.intro.IntroActivity
 
 @Composable
-fun DashboardScreen() {
+fun SettingsScreen() {
     val context = LocalContext.current
 
     var isAppsListDialogShown by remember { mutableStateOf(false) }
@@ -160,6 +160,6 @@ private fun ListItem(
 @Composable
 private fun PreviewDashboardScreen() {
     AppKiraTheme {
-        DashboardScreen()
+        SettingsScreen()
     }
 }

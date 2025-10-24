@@ -16,8 +16,8 @@ import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
 import com.nnk.appkira.presentation.designsystem.widgets.AppBottomBar
 import com.nnk.appkira.presentation.designsystem.widgets.AppTopBar
 import com.nnk.appkira.presentation.designsystem.widgets.BottomTab
-import com.nnk.appkira.presentation.features.home.screens.dashboard.DashboardScreen
 import com.nnk.appkira.presentation.features.home.screens.home.HomeScreen
+import com.nnk.appkira.presentation.features.home.screens.settings.SettingsScreen
 
 @Composable
 fun HomeContainerScreen() {
@@ -42,7 +42,7 @@ fun HomeContainerScreen() {
                 }
 
                 BottomTab.Dashboard -> {
-                    DashboardScreen()
+                    SettingsScreen()
                 }
             }
         }
