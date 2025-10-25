@@ -1,4 +1,4 @@
-package com.nnk.appkira.domain
+package com.nnk.appkira.domain.di
 
 import com.nnk.appkira.data.features.home.AppInformationProvider
 import com.nnk.appkira.domain.usecase.GetDeviceAppsUseCase
@@ -14,5 +14,5 @@ object HomeDomainModule {
     @Provides
     @ActivityRetainedScoped
     fun providesGetInstalledAppsUseCase(appInformationProvider: AppInformationProvider) =
-        GetDeviceAppsUseCase.getInstance(appInformationProvider)
+        GetDeviceAppsUseCase.Companion.getInstance(appInformationProvider)
 }
