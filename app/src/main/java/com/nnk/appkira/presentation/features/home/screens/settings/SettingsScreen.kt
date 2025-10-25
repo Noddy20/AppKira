@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.nnk.appkira.BuildConfig
 import com.nnk.appkira.R
 import com.nnk.appkira.core.system.AppExternalNavigator
 import com.nnk.appkira.data.features.home.SpecialApp
@@ -121,6 +122,21 @@ fun SettingsScreen() {
         ) {
             AppExternalNavigator.launchAppKiraGitRepoIssues(context)
         }
+
+        Text(
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = AppDimen.Dimen8X),
+            text =
+                stringResource(
+                    R.string.app_version_info,
+                    stringResource(R.string.app_name),
+                    BuildConfig.VERSION_NAME,
+                ),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
     }
 }
 
