@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import com.nnk.appkira.core.logger.Logger
 
 fun String.Companion.empty() = ""
@@ -28,4 +29,11 @@ fun Context.toast(message: String) {
             message,
             Toast.LENGTH_SHORT,
         ).show()
+}
+
+fun <K, V> Map<K, V>.toSnapshotStateMap(): SnapshotStateMap<K, V> {
+    val snapshotStateMap = SnapshotStateMap<K, V>()
+    snapshotStateMap.putAll(this)
+    Logger.d("Converting Map to SnapshotStateMap: $this | $snapshotStateMap")
+    return snapshotStateMap
 }

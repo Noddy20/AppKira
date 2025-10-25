@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,28 +30,47 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.nnk.appkira.R
 import com.nnk.appkira.core.system.AppExternalNavigator
 import com.nnk.appkira.data.features.home.SpecialApp
 import com.nnk.appkira.presentation.designsystem.dimen.AppDimen
 import com.nnk.appkira.presentation.designsystem.theme.AppKiraTheme
+import com.nnk.appkira.presentation.features.home.screens.settings.viewmodel.SettingsViewModel
 import com.nnk.appkira.presentation.features.home.screens.settings.widgets.AppsListSettingsDialog
 import com.nnk.appkira.presentation.features.intro.IntroActivity
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
+    val scope = LocalLifecycleOwner.current.lifecycleScope
+
+    val viewModel = hiltViewModel<SettingsViewModel>()
 
     var isAppsListDialogShown by remember { mutableStateOf(false) }
-    val appsList = SpecialApp.entries
+    var appsList by remember { mutableStateOf(emptyMap<SpecialApp, Boolean>()) }
 
-    if (isAppsListDialogShown) {
+    LaunchedEffect(isAppsListDialogShown) {
+        if (isAppsListDialogShown) {
+            scope.launch {
+                appsList = viewModel.getSpecialApps()
+            }
+        } else {
+            appsList = emptyMap()
+        }
+    }
+
+    if (isAppsListDialogShown && appsList.isNotEmpty()) {
         AppsListSettingsDialog(
             appsList = appsList,
             onCancel = {
                 isAppsListDialogShown = false
             },
             onSave = {
+                viewModel.saveSpecialApps(it)
                 isAppsListDialogShown = false
             },
         )
