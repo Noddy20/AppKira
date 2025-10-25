@@ -13,6 +13,14 @@ if [ "$lintStatus" = 0 ]; then
     echo "No issues were found, committing changes."
     exit 0
 else
-    echo 1>&2 "Need to fix issues before commit."
-    exit 1
+    ./gradlew --no-daemon --stacktrace :app:formatKotlin :app:lintKotlin
+    lintStatus=$?
+    echo "detektStatus Result :"
+    if [ "$lintStatus" = 0 ]; then
+        echo "Issues were found and fixed automatically, please commit again. Auto fix command - ./gradlew formatKotlin"
+        exit 1
+    else
+        echo 1>&2 "Need to fix issues before commit. Auto fix command - ./gradlew formatKotlin"
+        exit 1
+    fi
 fi
