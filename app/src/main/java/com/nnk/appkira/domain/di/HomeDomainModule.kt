@@ -1,7 +1,9 @@
 package com.nnk.appkira.domain.di
 
+import com.nnk.appkira.core.storage.AppPreferences
 import com.nnk.appkira.data.features.home.AppInformationProvider
 import com.nnk.appkira.domain.usecase.GetDeviceAppsUseCase
+import com.nnk.appkira.domain.usecase.GetSpecialAppsTypesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,4 +17,11 @@ object HomeDomainModule {
     @ActivityRetainedScoped
     fun providesGetInstalledAppsUseCase(appInformationProvider: AppInformationProvider) =
         GetDeviceAppsUseCase.Companion.getInstance(appInformationProvider)
+
+    @Provides
+    @ActivityRetainedScoped
+    fun providesGetSpecialAppsTypesUseCase(appPreferences: AppPreferences) =
+        GetSpecialAppsTypesUseCase.getInstance(
+            appPreferences = appPreferences,
+        )
 }
