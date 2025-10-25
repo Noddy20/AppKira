@@ -42,6 +42,7 @@
     <string name="cancel">Cancel</string>
     <string name="launcher">Launcher</string>
     <string name="system_apps">System Apps</string>
+    <string name="app_version_info">%s - Version: %s</string>
     <string name="accessibility_service_description">Enabling this feature allows AppKira to automatically force stop apps without manual intervention.
 \n
 \nAdvantages:
